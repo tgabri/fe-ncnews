@@ -1,0 +1,28 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+header {
+  background-color: #01001f;
+  height: 100px;
+  width: 100%;
+  color: white;
+  border-bottom: red 2px solid;
+}
+
+body {
+  background-color: azure;
+}
+
+ul {
+  display: block;
+  margin: 0 auto;
+  border: 1px solid black;
+  width: 80%;
+}
+ul li {
+}
+ul li h3 {
+  color: black;
+}
