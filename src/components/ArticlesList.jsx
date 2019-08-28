@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { getData } from '../utils';
+import { getArticles } from '../utils';
+import Articles from './Articles';
+import SortButtons from './SortButtons';
 import { Link } from '@reach/router';
 
 export default class ArticlesList extends Component {
@@ -8,32 +10,32 @@ export default class ArticlesList extends Component {
     isLoading: true,
     error: null
   };
+
   render() {
     const { isLoading, articles, error } = this.state;
     if (isLoading) return <p>Loading...</p>;
     if (error) return <p>Oops, ERROR</p>;
     return (
       <main>
-        <h1>ARTICLESLIST</h1>
-        <ul>
-          {articles.map(article => (
-            <Link key={article.article_id} to='/'>
-              <li>
-                <h3>{article.title}</h3>
-              </li>
-            </Link>
-          ))}
-        </ul>
+        <SortButtons fetchArticles={this.fetchArticles} />
+        <Link to='/createarticle'>
+          <p>Add An Article</p>
+        </Link>
+        <Articles
+          articles={articles}
+          fetchArticles={this.fetchArticles}
+          changeLike={this.changeLike}
+        />
       </main>
     );
   }
-
   componentDidMount() {
-    this.fetchData();
+    this.fetchArticles();
   }
-  fetchData = () => {
-    getData().then(articles => {
-      //   console.log(articles);
+
+  fetchArticles = sorted_by => {
+    const { topic_slug } = this.props;
+    getArticles(topic_slug, sorted_by).then(articles => {
       this.setState({
         articles,
         isLoading: false

@@ -1,11 +1,18 @@
 import React from 'react';
-import ArticlesList from './ArticlesList';
+import TopicsList from './TopicsList';
+import { Router } from '@reach/router';
 
 export default function HomePage() {
   return (
-    <div>
-      HOMEPAGE
-      <ArticlesList path='articles/' />
-    </div>
+    <main>
+      <div className='articleBtn'>
+        <h1>
+          <span>N</span>C-NEWS HOME
+        </h1>
+      </div>
+      <Router>
+        <TopicsList path='/' />
+      </Router>
+    </main>
   );
 }
