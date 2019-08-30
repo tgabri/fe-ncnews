@@ -38,7 +38,7 @@ class App extends React.Component {
           />
           <LoginPage path='/login' />
           <SignUpPage path='signup' />
-          <ErrorPage default />
+          <ErrorPage error={{ status: 404, msg: 'Page not found' }} default />
         </Router>
       </div>
     );

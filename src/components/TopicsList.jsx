@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from '@reach/router';
 import { getTopics } from '../utils';
 import ErrorPage from './reusable/ErrorPage';
+import Loading from './reusable/Loading';
 
 export default class TopicsList extends Component {
   state = {
@@ -11,7 +12,7 @@ export default class TopicsList extends Component {
   };
   render() {
     const { isLoading, topics, error } = this.state;
-    if (isLoading) return <p>Loading...</p>;
+    if (isLoading) return <Loading />;
     if (error) return <ErrorPage error={error} />;
     return (
       <main>

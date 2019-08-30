@@ -4,6 +4,7 @@ import Articles from './Articles';
 import SortButtons from './SortButtons';
 import { Link } from '@reach/router';
 import ErrorPage from './reusable/ErrorPage';
+import Loading from './reusable/Loading';
 
 export default class ArticlesList extends Component {
   state = {
@@ -14,7 +15,7 @@ export default class ArticlesList extends Component {
 
   render() {
     const { isLoading, articles, error } = this.state;
-    if (isLoading) return <p>Loading...</p>;
+    if (isLoading) return <Loading />;
     if (error) return <ErrorPage error={error} />;
     return (
       <main>
