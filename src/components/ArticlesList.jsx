@@ -3,6 +3,7 @@ import { getArticles } from '../utils';
 import Articles from './Articles';
 import SortButtons from './SortButtons';
 import { Link } from '@reach/router';
+import ErrorPage from './reusable/ErrorPage';
 
 export default class ArticlesList extends Component {
   state = {
@@ -14,17 +15,20 @@ export default class ArticlesList extends Component {
   render() {
     const { isLoading, articles, error } = this.state;
     if (isLoading) return <p>Loading...</p>;
-    if (error) return <p>Oops, ERROR</p>;
+    if (error) return <ErrorPage error={error} />;
     return (
       <main>
         <SortButtons fetchArticles={this.fetchArticles} />
-        <Link to='/createarticle'>
-          <p>Add An Article</p>
-        </Link>
+        {this.props.loggedInUser && (
+          <Link to='/createarticle'>
+            <p>Add An Article</p>
+          </Link>
+        )}
         <Articles
           articles={articles}
           fetchArticles={this.fetchArticles}
           changeLike={this.changeLike}
+          loggedInUser={this.props.loggedInUser}
         />
       </main>
     );
@@ -35,11 +39,26 @@ export default class ArticlesList extends Component {
 
   fetchArticles = sorted_by => {
     const { topic_slug } = this.props;
-    getArticles(topic_slug, sorted_by).then(articles => {
-      this.setState({
-        articles,
-        isLoading: false
+    getArticles(topic_slug, sorted_by)
+      .then(articles => {
+        this.setState({
+          articles,
+          isLoading: false,
+          error: null
+        });
+      })
+      .catch(error => {
+        const {
+          response: {
+            status,
+            data: { msg }
+          }
+        } = error;
+
+        this.setState({
+          error: { msg, status },
+          isLoading: false
+        });
       });
-    });
   };
 }

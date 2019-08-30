@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from '@reach/router';
 import { getTopics } from '../utils';
+import ErrorPage from './reusable/ErrorPage';
 
 export default class TopicsList extends Component {
   state = {
@@ -9,8 +10,9 @@ export default class TopicsList extends Component {
     error: null
   };
   render() {
-    const { isLoading, topics } = this.state;
+    const { isLoading, topics, error } = this.state;
     if (isLoading) return <p>Loading...</p>;
+    if (error) return <ErrorPage />;
     return (
       <main>
         <ul className='topicsList'>
@@ -38,8 +40,22 @@ export default class TopicsList extends Component {
   }
 
   fetchTopics = () => {
-    getTopics().then(topics => {
-      this.setState({ topics, isLoading: false });
-    });
+    getTopics()
+      .then(topics => {
+        this.setState({ topics, isLoading: false });
+      })
+      .catch(error => {
+        const {
+          response: {
+            status,
+            data: { msg }
+          }
+        } = error;
+
+        this.setState({
+          error: { msg, status },
+          isLoading: false
+        });
+      });
   };
 }

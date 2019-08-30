@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { removeArticle } from '../utils';
-
+import { navigate } from '@reach/router';
 export default class DeleteArticle extends Component {
   render() {
     return (
@@ -13,7 +13,8 @@ export default class DeleteArticle extends Component {
     );
   }
   handleClick(article_id) {
-    console.log(article_id);
-    removeArticle(article_id);
+    removeArticle(article_id).then(() => {
+      navigate('/articles');
+    });
   }
 }

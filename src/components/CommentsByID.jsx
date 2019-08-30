@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import { getComments } from '../utils';
 import PostComment from './PostComment';
 import DeleteComment from './DeleteComment';
+import { insertComment } from '../utils';
+import { removeComment } from '../utils';
+import CommentVoter from './reusable/CommentVoter';
+
 export default class CommentsByID extends Component {
   state = {
     comments: null,
@@ -9,41 +13,41 @@ export default class CommentsByID extends Component {
     error: null
   };
   render() {
-    const { isLoading, comments } = this.state;
+    const { isLoading, comments, error } = this.state;
     if (isLoading) return <p>Loading...</p>;
+    if (error) return <p>ERROR</p>;
     return (
       <main>
-        <PostComment article_id={this.props.path} />
+        {this.props.loggedInUser && (
+          <PostComment
+            addComment={this.addComment}
+            loggedInUser={this.props.loggedInUser}
+          />
+        )}
         <div className='comments'>
           <h2>Comments</h2>
         </div>
         {comments.map(comment => (
           <div key={comment.comment_id} className='commentsContainer'>
             <div className='topBar'>
+              <div className='commentAuthorBox'></div>
               <img
                 src='https://image.flaticon.com/icons/svg/149/149452.svg'
                 alt=''
               />
               <p>{comment.author}</p>
-              <DeleteComment comment_id={comment.comment_id} />
+              {comment.author === this.props.loggedInUser && (
+                <DeleteComment
+                  comment_id={comment.comment_id}
+                  deleteComment={this.deleteComment}
+                />
+              )}
             </div>
             <article>{comment.body}.</article>
-            <div className='likesBar'>
-              <img
-                src='https://image.flaticon.com/icons/svg/149/149918.svg'
-                alt=''
-              />
-              <div className='dateBox'>
-                <p>{comment.created_at}.</p>
-              </div>
-              <div className='likeBox'>
-                {comment.votes ? <p>{comment.votes} likes</p> : <p>0 like</p>}
-              </div>
-            </div>
 
-            <div className='elementBtn'>
-              <button>Like</button>
-            </div>
+            <>
+              <CommentVoter comment={comment} />
+            </>
           </div>
         ))}
       </main>
@@ -54,9 +58,29 @@ export default class CommentsByID extends Component {
   }
 
   fetchComments = () => {
-    const { path } = this.props;
-    getComments(path).then(comments => {
+    const { article_id } = this.props;
+    getComments(article_id).then(comments => {
       this.setState({ comments, isLoading: false });
+    });
+  };
+
+  addComment = newComment => {
+    const { article_id } = this.props;
+    insertComment(article_id, newComment).then(comment => {
+      this.setState(({ comments }) => {
+        return { comments: [comment, ...comments] };
+      });
+    });
+  };
+
+  deleteComment = comment_id => {
+    removeComment(comment_id).then(() => {
+      this.setState(currentState => {
+        const newCommentList = currentState.comments.filter(comment => {
+          return comment.comment_id !== comment_id;
+        });
+        return { comments: newCommentList };
+      });
     });
   };
 }

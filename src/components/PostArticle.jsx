@@ -1,26 +1,26 @@
 import React, { Component } from 'react';
 import { insertArticle } from '../utils';
+import { navigate } from '@reach/router';
 
 export default class PostArticle extends Component {
   state = {
     title: '',
     topic: '',
     body: '',
-    author: '',
     article: null
   };
   render() {
-    const { title, topic, body, author } = this.state;
+    let { title, topic, body } = this.state;
     return (
-      <div className='postBtn'>
+      <div className='postArticleContainer'>
         <form className='addArticle' onSubmit={this.handleSubmit}>
           <label>
-            Username
+            Topic
             <input
               type='text'
               required
-              name='author'
-              value={author}
+              name='topic'
+              value={topic}
               onChange={this.handleChange}
             />
           </label>
@@ -34,24 +34,13 @@ export default class PostArticle extends Component {
               onChange={this.handleChange}
             />
           </label>
-          <br />
-          <label>
-            Topic
-            <input
-              type='text'
-              required
-              name='topic'
-              value={topic}
-              onChange={this.handleChange}
-            />
-          </label>
-          <br />
           <label>
             Body
             <textarea
               required
               rows='5'
               cols='30'
+              name='body'
               value={body}
               onChange={this.handleChange}
             />
@@ -70,9 +59,11 @@ export default class PostArticle extends Component {
   };
   handleSubmit = e => {
     e.preventDefault();
-    const { title, topic, body, author } = this.state;
-    insertArticle({ title, topic, body, author }).then(article => {
-      console.log(article, 'CREATED ARTICLE');
+    const { title, topic, body } = this.state;
+    const { loggedInUser } = this.props;
+    console.log(this.props.loggedInUser);
+    insertArticle({ title, topic, body, author: loggedInUser }).then(() => {
+      navigate('/articles/');
     });
   };
 }

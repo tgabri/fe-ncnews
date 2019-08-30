@@ -11,9 +11,12 @@ export const getArticles = (topic, sorted_by) => {
 };
 
 export const getArticle = article_id => {
-  return axios.get(`${baseURL}/articles/${article_id}`).then(({ data }) => {
-    return data.article;
-  });
+  return axios
+    .get(`${baseURL}/articles/${article_id}`)
+    .then(({ data }) => {
+      return data.article;
+    })
+    .catch(err => console.log(err));
 };
 
 export const getComments = article_id => {
@@ -36,6 +39,9 @@ export const changeVotes = (article_id, value) => {
     .then(({ data }) => {
       return data.article;
     });
+};
+export const changeCommentVotes = (comment_id, value) => {
+  return axios.patch(`${baseURL}/comments/${comment_id}`, { inc_votes: value });
 };
 
 export const insertArticle = newArticle => {

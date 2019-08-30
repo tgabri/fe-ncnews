@@ -27,27 +27,18 @@ export default function Articles(props) {
                 <p>{article.author}</p>
               </div>
             </div>
-            <Link
-              to={`/articles/${article.article_id}`}
-              value={article.article_id}
-            >
-              <h3> {article.title}</h3>
-              <img
-                className='articleImg'
-                src={`/img/${article.topic}.jpg`}
-                alt='random'
-              />
-            </Link>
-            <div className='likesBar'>
-              <img
-                src='https://image.flaticon.com/icons/svg/149/149918.svg'
-                alt=''
-              />
-              <div className='dateBox'>
-                <p>{article.created_at}</p>
-              </div>
+            <div className='articleContainer'>
+              <Link
+                to={`/articles/${article.article_id}`}
+                value={article.article_id}
+              >
+                <h3> {article.title}</h3>
+                <img src={`/img/${article.topic}.jpg`} alt='random' />
+              </Link>
             </div>
-            <Voter article={article} />
+            {props.loggedInUser && (
+              <Voter article={article} created_at={article.created_at} />
+            )}
           </li>
         ))}
       </ul>

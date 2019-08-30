@@ -8,6 +8,7 @@ import ArticleCard from './components/ArticleCard';
 import PostArticle from './components/PostArticle';
 import LoginPage from './components/header/LoginPage';
 import SignUpPage from './components/header/SignUpPage';
+import ErrorPage from './components/reusable/ErrorPage';
 
 class App extends React.Component {
   state = {
@@ -16,15 +17,28 @@ class App extends React.Component {
   render() {
     return (
       <div className='App'>
-        <Header />
+        <Header loggedInUser={this.state.loggedInUser} />
         <Router>
           <HomePage path='/' />
-          <ArticlesList path='/articles/*' />
-          <ArticlesList path='/topics/:topic_slug/articles' />
-          <ArticleCard path='/articles/:article_id/*' />
-          <PostArticle path='/createarticle/' />
+          <ArticlesList
+            path='/articles'
+            loggedInUser={this.state.loggedInUser}
+          />
+          <ArticlesList
+            path='/topics/:topic_slug/articles'
+            loggedInUser={this.state.loggedInUser}
+          />
+          <ArticleCard
+            path='/articles/:article_id'
+            loggedInUser={this.state.loggedInUser}
+          />
+          <PostArticle
+            loggedInUser={this.state.loggedInUser}
+            path='/createarticle/'
+          />
           <LoginPage path='/login' />
           <SignUpPage path='signup' />
+          {/* <ErrorPage default /> */}
         </Router>
       </div>
     );

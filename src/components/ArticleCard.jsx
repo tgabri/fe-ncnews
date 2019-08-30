@@ -4,6 +4,7 @@ import CommentsByID from './CommentsByID';
 import { Link } from '@reach/router';
 import Voter from './Voter';
 import DeleteArticle from './DeleteArticle';
+import ErrorPage from './reusable/ErrorPage';
 
 export default class ArticleCard extends Component {
   state = {
@@ -14,50 +15,57 @@ export default class ArticleCard extends Component {
   render() {
     const { isLoading, article, error } = this.state;
     if (isLoading) return <p>Loading...</p>;
-    if (error) return <p>Oops, ERROR</p>;
+    if (error) return <ErrorPage error={error} />;
     return (
       <main>
-        <ul>
-          {article.map(item => (
-            <div key={item.article_id} className='article'>
-              <h2>{item.title}</h2>
-              <li>
-                <div className='topBar'>
-                  <div className='topicBox'>
-                    <img
-                      src='https://image.flaticon.com/icons/svg/259/259500.svg'
-                      alt='topic'
-                    />
-                    <Link to={`/topics/${item.topic}/articles`}>
-                      <p>{item.topic}</p>
-                    </Link>
+        <div className='article'>
+          <ul>
+            {article.map(item => (
+              <div key={item.article_id}>
+                <h2>{item.title}</h2>
+                <li>
+                  <div className='topBar'>
+                    <div className='topicBox'>
+                      <img
+                        src='https://image.flaticon.com/icons/svg/259/259500.svg'
+                        alt='topic'
+                      />
+                      <Link to={`/topics/${item.topic}/articles`}>
+                        <p>{item.topic}</p>
+                      </Link>
+                    </div>
+                    <div className='authorBox'>
+                      <img
+                        src='https://image.flaticon.com/icons/svg/149/149452.svg'
+                        alt=''
+                      />
+                      <p> {item.author}</p>
+                    </div>
                   </div>
-                  <div className='authorBox'>
-                    <img
-                      src='https://image.flaticon.com/icons/svg/149/149452.svg'
-                      alt=''
-                    />
-                    <p> {item.author}</p>
+                  <div className='articleBody'>
+                    {item.author === this.props.loggedInUser && (
+                      <DeleteArticle
+                        article_id={item.article_id}
+                        deleteArticle={this.props.deleteArticle}
+                      />
+                    )}
+                    <p>{item.body}</p>
                   </div>
-                  <DeleteArticle article_id={item.article_id} />
-                </div>
-                <article>{item.body}</article>
-                <div className='likesBar'>
-                  <img
-                    src='https://image.flaticon.com/icons/svg/149/149918.svg'
-                    alt=''
+
+                  <>
+                    <Voter article={item} created_at={item.created_at} />
+                  </>
+                </li>
+                <div className='commentContainer'>
+                  <CommentsByID
+                    article_id={`${item.article_id}`}
+                    loggedInUser={this.props.loggedInUser}
                   />
-                  <div className='dateBox'>
-                    <p>{item.created_at}</p>
-                  </div>
-                  <Voter article={item} />
-                </div>
-                <button>SORT</button>
-                <CommentsByID path={`${item.article_id}`} />
-              </li>
-            </div>
-          ))}
-        </ul>
+                </div>{' '}
+              </div>
+            ))}
+          </ul>
+        </div>
       </main>
     );
   }
@@ -66,8 +74,23 @@ export default class ArticleCard extends Component {
   }
   fetchArticle = () => {
     const { article_id } = this.props;
-    getArticle(article_id).then(article => {
-      this.setState({ article, isLoading: false });
-    });
+    getArticle(article_id)
+      .then(article => {
+        this.setState({ article, isLoading: false, error: null });
+      })
+      .catch(error => {
+        console.dir(error);
+        const {
+          response: {
+            status,
+            data: { msg }
+          }
+        } = error;
+
+        this.setState({
+          error: { msg, status },
+          isLoading: false
+        });
+      });
   };
 }
