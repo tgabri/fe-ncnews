@@ -11,12 +11,9 @@ export const getArticles = (topic, sorted_by) => {
 };
 
 export const getArticle = article_id => {
-  return axios
-    .get(`${baseURL}/articles/${article_id}`)
-    .then(({ data }) => {
-      return data.article;
-    })
-    .catch(err => console.log(err));
+  return axios.get(`${baseURL}/articles/${article_id}`).then(({ data }) => {
+    return data.article;
+  });
 };
 
 export const getComments = article_id => {

@@ -18,7 +18,6 @@ export default class ArticlesList extends Component {
     if (error) return <ErrorPage error={error} />;
     return (
       <main>
-        <SortButtons fetchArticles={this.fetchArticles} />
         <div className='addArticleBtn'>
           {this.props.loggedInUser && (
             <Link to='/createarticle'>
@@ -26,6 +25,7 @@ export default class ArticlesList extends Component {
             </Link>
           )}
         </div>
+        <SortButtons fetchArticles={this.fetchArticles} />
         <Articles
           articles={articles}
           fetchArticles={this.fetchArticles}

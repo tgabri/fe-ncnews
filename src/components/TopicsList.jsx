@@ -12,7 +12,7 @@ export default class TopicsList extends Component {
   render() {
     const { isLoading, topics, error } = this.state;
     if (isLoading) return <p>Loading...</p>;
-    if (error) return <ErrorPage />;
+    if (error) return <ErrorPage error={error} />;
     return (
       <main>
         <ul className='topicsList'>
@@ -42,7 +42,7 @@ export default class TopicsList extends Component {
   fetchTopics = () => {
     getTopics()
       .then(topics => {
-        this.setState({ topics, isLoading: false });
+        this.setState({ topics, isLoading: false, error: null });
       })
       .catch(error => {
         const {

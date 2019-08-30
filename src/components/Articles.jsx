@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from '@reach/router';
-import Voter from './Voter';
+import Voter from './reusable/Voter';
 
 export default function Articles(props) {
   return (

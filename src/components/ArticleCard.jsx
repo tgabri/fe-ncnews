@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { getArticle } from '../utils';
 import CommentsByID from './CommentsByID';
 import { Link } from '@reach/router';
-import Voter from './Voter';
+import Voter from './reusable/Voter';
 import DeleteArticle from './DeleteArticle';
 import ErrorPage from './reusable/ErrorPage';
+import Loading from './reusable/Loading';
 
 export default class ArticleCard extends Component {
   state = {
@@ -14,7 +15,7 @@ export default class ArticleCard extends Component {
   };
   render() {
     const { isLoading, article, error } = this.state;
-    if (isLoading) return <p>Loading...</p>;
+    if (isLoading) return <Loading />;
     if (error) return <ErrorPage error={error} />;
     return (
       <main>
@@ -79,14 +80,12 @@ export default class ArticleCard extends Component {
         this.setState({ article, isLoading: false, error: null });
       })
       .catch(error => {
-        console.dir(error);
         const {
           response: {
             status,
             data: { msg }
           }
         } = error;
-
         this.setState({
           error: { msg, status },
           isLoading: false

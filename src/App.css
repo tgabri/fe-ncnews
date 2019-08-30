@@ -8,10 +8,26 @@
 span {
   color: #ff0000;
 }
-.errorMsg {
-  margin-top: 100vw;
+.loading {
+  margin: 160px;
 }
-
+.loading img {
+  display: block;
+  margin: 60px;
+  width: 80%;
+  opacity: 0.8;
+  border-radius: 80px;
+}
+.errorMsg {
+  margin: 100px auto;
+  width: 60%;
+}
+.errorMsg p {
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-weight: bold;
+  font-size: 24px;
+  text-align: center;
+}
 body {
   background-image: linear-gradient(
     to right,
@@ -38,7 +54,7 @@ header p {
   float: right;
   color: white;
 }
-header h1 {
+header a h1 {
   line-height: 50px;
   float: left;
   font-family: 'Franklin Gothic Medium';
@@ -46,7 +62,7 @@ header h1 {
   font-weight: 600;
   text-align: center;
   color: whitesmoke;
-  width: 36%;
+  width: 40%;
 }
 header h1:hover {
   color: yellow;
@@ -183,9 +199,6 @@ header a {
 
 /* ARTICLES */
 
-.sortMenu {
-  margin-top: 60px;
-}
 .addArticleBtn a {
   display: block;
   float: right;
@@ -211,6 +224,7 @@ header a {
   display: flex;
   align-content: center;
   align-items: center;
+  margin-top: 60px;
   margin-left: 10px;
   width: 260px;
 }

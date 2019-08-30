@@ -10,7 +10,7 @@ export default class PostArticle extends Component {
     article: null
   };
   render() {
-    let { title, topic, body } = this.state;
+    let { title, body } = this.state;
     return (
       <div className='postArticleContainer'>
         <form className='addArticle' onSubmit={this.handleSubmit}>
@@ -66,7 +66,6 @@ export default class PostArticle extends Component {
     e.preventDefault();
     const { title, topic, body } = this.state;
     const { loggedInUser } = this.props;
-    console.log(topic);
     insertArticle({ title, topic, body, author: loggedInUser }).then(() => {
       navigate('/articles/');
     });

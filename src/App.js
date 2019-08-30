@@ -38,7 +38,7 @@ class App extends React.Component {
           />
           <LoginPage path='/login' />
           <SignUpPage path='signup' />
-          {/* <ErrorPage default /> */}
+          <ErrorPage default />
         </Router>
       </div>
     );

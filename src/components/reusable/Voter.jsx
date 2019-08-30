@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { changeVotes } from '../utils';
+import { changeVotes } from '../../utils';
 
 export default class Voter extends Component {
   state = {
