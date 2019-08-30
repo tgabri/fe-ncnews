@@ -6,8 +6,6 @@ import HomePage from './components/HomePage';
 import ArticlesList from './components/ArticlesList';
 import ArticleCard from './components/ArticleCard';
 import PostArticle from './components/PostArticle';
-import LoginPage from './components/header/LoginPage';
-import SignUpPage from './components/header/SignUpPage';
 import ErrorPage from './components/reusable/ErrorPage';
 
 class App extends React.Component {
@@ -36,8 +34,6 @@ class App extends React.Component {
             loggedInUser={this.state.loggedInUser}
             path='/createarticle/'
           />
-          <LoginPage path='/login' />
-          <SignUpPage path='signup' />
           <ErrorPage error={{ status: 404, msg: 'Page not found' }} default />
         </Router>
       </div>
