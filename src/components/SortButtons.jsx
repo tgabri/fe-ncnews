@@ -9,10 +9,8 @@ export default class SortButtons extends React.Component {
     const { buttons, sortByValues } = this.state;
     return (
       <div className='sortMenu'>
-        <p>Sort By:</p>
         {sortByValues.map((sortByValue, i) => (
           <button
-            className='sortBtn'
             key={`${sortByValue}`}
             onClick={e => this.props.fetchArticles(sortByValue)}
             value={`${sortByValue}`}

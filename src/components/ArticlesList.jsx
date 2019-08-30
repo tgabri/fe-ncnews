@@ -19,11 +19,13 @@ export default class ArticlesList extends Component {
     return (
       <main>
         <SortButtons fetchArticles={this.fetchArticles} />
-        {this.props.loggedInUser && (
-          <Link to='/createarticle'>
-            <p>Add An Article</p>
-          </Link>
-        )}
+        <div className='addArticleBtn'>
+          {this.props.loggedInUser && (
+            <Link to='/createarticle'>
+              <p>Add Article</p>
+            </Link>
+          )}
+        </div>
         <Articles
           articles={articles}
           fetchArticles={this.fetchArticles}

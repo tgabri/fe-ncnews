@@ -20,7 +20,7 @@ export default function Header(props) {
           <SignUpPage />
         </>
       )}
-      <SearchBar />
+      {/* <SearchBar /> */}
     </header>
   );
 }

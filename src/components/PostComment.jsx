@@ -10,7 +10,7 @@ export default class PostComment extends Component {
       <div className='postCommentContainer'>
         <form className='addCommentBox' onSubmit={this.handleSubmit}>
           <label>
-            Comment:
+            <p> Comment</p>
             <textarea
               required
               rows='5'

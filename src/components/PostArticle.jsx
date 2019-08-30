@@ -15,17 +15,22 @@ export default class PostArticle extends Component {
       <div className='postArticleContainer'>
         <form className='addArticle' onSubmit={this.handleSubmit}>
           <label>
-            Topic
-            <input
+            <p>Topic</p>
+            <select onChange={this.handleChange} name='topic'>
+              <option value='coding'>Coding</option>
+              <option value='football'>Football</option>
+              <option value='cooking'>Cooking</option>
+            </select>
+            {/* <input
               type='text'
               required
               name='topic'
               value={topic}
               onChange={this.handleChange}
-            />
+            /> */}
           </label>
           <label>
-            Title
+            <p>Title</p>
             <input
               type='text'
               required
@@ -35,10 +40,10 @@ export default class PostArticle extends Component {
             />
           </label>
           <label>
-            Body
+            <p> Body</p>
             <textarea
               required
-              rows='5'
+              rows='15'
               cols='30'
               name='body'
               value={body}
@@ -61,7 +66,7 @@ export default class PostArticle extends Component {
     e.preventDefault();
     const { title, topic, body } = this.state;
     const { loggedInUser } = this.props;
-    console.log(this.props.loggedInUser);
+    console.log(topic);
     insertArticle({ title, topic, body, author: loggedInUser }).then(() => {
       navigate('/articles/');
     });
