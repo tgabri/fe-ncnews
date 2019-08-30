@@ -13,7 +13,7 @@ export default class PostArticle extends Component {
     let { title, body } = this.state;
     return (
       <div className='postArticleContainer'>
-        <form className='addArticle' onSubmit={this.handleSubmit}>
+        <form onSubmit={this.handleSubmit}>
           <label>
             <p>Topic</p>
             <select onChange={this.handleChange} name='topic'>

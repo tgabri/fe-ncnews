@@ -8,7 +8,7 @@ export default class PostComment extends Component {
     const { body } = this.state;
     return (
       <div className='postCommentContainer'>
-        <form className='addCommentBox' onSubmit={this.handleSubmit}>
+        <form onSubmit={this.handleSubmit}>
           <label>
             <p> Comment</p>
             <textarea
