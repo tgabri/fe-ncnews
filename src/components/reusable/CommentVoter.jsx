@@ -15,7 +15,7 @@ export default class CommentVoter extends Component {
             alt={`${this.props.comment.created_at}`}
           />
           <div className='dateBox'>
-            <p>{this.props.comment.created_at}.</p>
+            <p>{new Date(this.props.comment.created_at).toLocaleString()}</p>
           </div>
           <div className='likeBox'>
             {this.props.comment.votes ? (

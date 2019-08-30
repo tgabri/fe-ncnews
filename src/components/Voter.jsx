@@ -16,7 +16,7 @@ export default class Voter extends Component {
               alt=''
             />
             <div className='dateBox'>
-              <p>{this.props.created_at}</p>
+              <p>{new Date(this.props.created_at).toLocaleString()}</p>
             </div>
             <div className='likeBox'>
               {this.props.article.votes ? (
