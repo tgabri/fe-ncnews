@@ -542,6 +542,9 @@ article {
   text-align: center;
   padding: 10px;
 }
+.addCommentBox textarea {
+  width: 80%;
+}
 .addCommentBox button {
   padding: 5px;
   margin: 5px;
