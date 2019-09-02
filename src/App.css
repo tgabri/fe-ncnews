@@ -65,12 +65,6 @@ header {
   width: 100%;
   border-bottom: red 2px solid;
 }
-header p {
-  height: 16px;
-  font-size: 12px;
-  float: right;
-  color: white;
-}
 header a h1 {
   line-height: 50px;
   float: left;
@@ -87,37 +81,43 @@ header h1:hover {
 header a {
   text-decoration: none;
 }
-.searchForm {
-  float: right;
-  margin-top: 15px;
-  margin-right: 20px;
+.login button {
+  margin-top: 14px;
 }
-.searchBtn {
-  background-image: linear-gradient(
-    to right,
-    rgba(18, 52, 82, 0.05) 0%,
-    rgba(18, 52, 82, 0.3) 50%,
-    rgba(18, 52, 82, 0.5) 100%
-  );
-  border-radius: 5px;
-  font-size: 10px;
-  font-family: Arial, Helvetica, sans-serif;
+.login button,
+.logout button {
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   font-weight: bold;
-  text-align: center;
+  font-size: 14px;
+  color: #f5fbff;
+  padding: 2px;
+  float: right;
+  background-color: transparent;
+  border: 1px #f5fbff solid;
   text-transform: uppercase;
 }
-.searchBar {
-  border-radius: 30px;
-  margin-right: 10px;
-  width: 120px;
+.logout {
+  text-align: center;
 }
-.loginBtn {
-  height: 16px;
-  float: right;
+.logout p {
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-weight: bold;
+  font-size: 14px;
+  color: #f5fbff;
 }
-.signupBtn {
-  height: 16px;
-  float: right;
+
+/* LOGIN PAGE */
+
+.loginContainer {
+  display: block;
+  margin: 120px auto;
+  width: 160px;
+}
+.loginContainer h3 {
+  margin-bottom: 20px;
+}
+.loginContainer input {
+  margin-bottom: 10px;
 }
 
 /* HOME */
@@ -390,9 +390,9 @@ header a {
   margin-right: 5px;
   padding: 5px;
   font-weight: bold;
-  color: #0000ff;
+  color: #01001f;
   background-color: transparent;
-  border: 1px #0000ff solid;
+  border: 1px #01001f solid;
   border-radius: 5px;
 }
 .pager button:hover {
@@ -671,10 +671,13 @@ article {
   .articles ul li {
     height: 550px;
   }
+
   /* ARTICLE */
+
   .article ul li {
     width: 90%;
   }
+
   /* LISTS */
 
   .topBar {
@@ -741,6 +744,7 @@ article {
   .imgBox li h2 {
     width: 600px;
   }
+
   /* ARTICLES */
 
   .deleteBtn {
@@ -787,12 +791,5 @@ article {
 
   .commentContainer {
     width: 640px;
-  }
-}
-@media only screen and (min-width: 1280px) {
-  /* HEADER */
-
-  .searchForm {
-    margin-top: 30px;
   }
 }

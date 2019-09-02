@@ -10,7 +10,7 @@ export default class PostArticle extends Component {
     article: null
   };
   render() {
-    let { title, body } = this.state;
+    const { title, body } = this.state;
     return (
       <div className='postArticleContainer'>
         <form onSubmit={this.handleSubmit}>
