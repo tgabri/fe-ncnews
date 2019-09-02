@@ -54,7 +54,7 @@ export default class ArticleCard extends Component {
                   </div>
 
                   <>
-                    <Voter article={item} created_at={item.created_at} />
+                    <Voter data={item} />
                   </>
                 </li>
                 <div className='commentContainer'>

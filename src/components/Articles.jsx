@@ -36,9 +36,7 @@ export default function Articles(props) {
                 <img src={`/img/${article.topic}.jpg`} alt='random' />
               </Link>
             </div>
-            {props.loggedInUser && (
-              <Voter article={article} created_at={article.created_at} />
-            )}
+            {props.loggedInUser && <Voter data={article} />}
           </li>
         ))}
       </ul>

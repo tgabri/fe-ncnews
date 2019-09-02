@@ -30,7 +30,7 @@ export const getTopics = () => {
   });
 };
 
-export const changeVotes = (article_id, value) => {
+export const changeArticleVotes = (article_id, value) => {
   return axios
     .patch(`${baseURL}/articles/${article_id}`, { inc_votes: value })
     .then(({ data }) => {

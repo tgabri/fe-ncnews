@@ -21,13 +21,6 @@ export default class PostArticle extends Component {
               <option value='football'>Football</option>
               <option value='cooking'>Cooking</option>
             </select>
-            {/* <input
-              type='text'
-              required
-              name='topic'
-              value={topic}
-              onChange={this.handleChange}
-            /> */}
           </label>
           <label>
             <p>Title</p>

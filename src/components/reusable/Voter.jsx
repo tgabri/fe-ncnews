@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { changeVotes } from '../../utils';
+import { changeArticleVotes, changeCommentVotes } from '../../utils';
 
 export default class Voter extends Component {
   state = {
@@ -7,38 +7,41 @@ export default class Voter extends Component {
   };
   render() {
     const { voteChange } = this.state;
+    const {
+      article_id,
+      comment_id,
+      votes,
+      comment_count,
+      created_at
+    } = this.props.data;
     return (
       <>
-        {this.props.article.article_id && (
-          <div className='likesBar'>
-            <img
-              src='https://image.flaticon.com/icons/svg/149/149918.svg'
-              alt=''
-            />
-            <div className='dateBox'>
-              <p>{new Date(this.props.created_at).toLocaleString()}</p>
-            </div>
-            <div className='likeBox'>
-              {this.props.article.votes ? (
-                <p>{this.props.article.votes + voteChange} like(s)</p>
-              ) : (
-                <p>0 like</p>
-              )}
-            </div>
+        <div className='likesBar'>
+          <img
+            src='https://image.flaticon.com/icons/svg/149/149918.svg'
+            alt=''
+          />
+          <div className='dateBox'>
+            <p>{new Date(created_at).toLocaleString()}</p>
+          </div>
+          <div className='likeBox'>
+            {votes ? <p>{votes + voteChange} like(s)</p> : <p>0 like</p>}
+          </div>
+          {article_id && (
             <div className='commentBox'>
-              {this.props.article.comment_count ? (
-                <p>{this.props.article.comment_count} comment(s)</p>
+              {comment_count ? (
+                <p>{comment_count} comment(s)</p>
               ) : (
                 <p>0 comment</p>
               )}
             </div>
-          </div>
-        )}
+          )}
+        </div>
         <div className='elementBtn'>
           {voteChange < 1 && (
             <button
               disabled={voteChange === 1}
-              onClick={e => this.changeLike(this.props.article.article_id, 1)}
+              onClick={e => this.changeLike(article_id, 1, comment_id)}
             >
               Like
             </button>
@@ -46,7 +49,7 @@ export default class Voter extends Component {
           {voteChange > -1 && (
             <button
               disabled={voteChange === -1}
-              onClick={e => this.changeLike(this.props.article.article_id, -1)}
+              onClick={e => this.changeLike(article_id, -1, comment_id)}
             >
               Dislike
             </button>
@@ -56,11 +59,19 @@ export default class Voter extends Component {
     );
   }
 
-  changeLike = (article_id, value) => {
-    changeVotes(article_id, value).then(() => {
-      this.setState(currentState => {
-        return { voteChange: currentState.voteChange + value };
+  changeLike = (article_id, value, comment_id) => {
+    if (article_id) {
+      changeArticleVotes(article_id, value).then(() => {
+        this.setState(currentState => {
+          return { voteChange: currentState.voteChange + value };
+        });
       });
-    });
+    } else {
+      changeCommentVotes(comment_id, value).then(() => {
+        this.setState(currentState => {
+          return { voteChange: currentState.voteChange + value };
+        });
+      });
+    }
   };
 }

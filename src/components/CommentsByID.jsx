@@ -4,7 +4,7 @@ import PostComment from './PostComment';
 import DeleteComment from './DeleteComment';
 import { insertComment } from '../utils';
 import { removeComment } from '../utils';
-import CommentVoter from './reusable/CommentVoter';
+import Voter from './reusable/Voter';
 
 export default class CommentsByID extends Component {
   state = {
@@ -46,7 +46,7 @@ export default class CommentsByID extends Component {
             <article>{comment.body}.</article>
 
             <>
-              <CommentVoter comment={comment} />
+              <Voter data={comment} />
             </>
           </div>
         ))}
