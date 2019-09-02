@@ -2,11 +2,11 @@ import axios from 'axios';
 
 const baseURL = 'https://gabor-nc-news.herokuapp.com/api';
 
-export const getArticles = (topic, sorted_by) => {
+export const getArticles = (topic, sorted_by, page) => {
   return axios
-    .get(`${baseURL}/articles`, { params: { topic, sorted_by } })
+    .get(`${baseURL}/articles`, { params: { topic, sorted_by, p: page } })
     .then(({ data }) => {
-      return data.articles;
+      return data;
     });
 };
 
@@ -16,11 +16,11 @@ export const getArticle = article_id => {
   });
 };
 
-export const getComments = article_id => {
+export const getComments = (article_id, page) => {
   return axios
-    .get(`${baseURL}/articles/${article_id}/comments`)
+    .get(`${baseURL}/articles/${article_id}/comments`, { params: { p: page } })
     .then(({ data }) => {
-      return data.comments;
+      return data;
     });
 };
 

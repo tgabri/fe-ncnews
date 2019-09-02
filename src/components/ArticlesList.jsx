@@ -5,16 +5,19 @@ import SortButtons from './SortButtons';
 import { Link } from '@reach/router';
 import ErrorPage from './reusable/ErrorPage';
 import Loading from './reusable/Loading';
+import Pager from './reusable/Pager';
 
 export default class ArticlesList extends Component {
   state = {
     articles: null,
     isLoading: true,
-    error: null
+    error: null,
+    page: 1,
+    maxPage: null
   };
 
   render() {
-    const { isLoading, articles, error } = this.state;
+    const { isLoading, articles, error, page, maxPage } = this.state;
     if (isLoading) return <Loading />;
     if (error) return <ErrorPage error={error} />;
     return (
@@ -27,27 +30,44 @@ export default class ArticlesList extends Component {
           )}
         </div>
         <SortButtons fetchArticles={this.fetchArticles} />
+        <Pager changePage={this.changePage} page={page} maxPage={maxPage} />
         <Articles
           articles={articles}
           fetchArticles={this.fetchArticles}
           changeLike={this.changeLike}
           loggedInUser={this.props.loggedInUser}
         />
+        <Pager changePage={this.changePage} page={page} maxPage={maxPage} />
       </main>
     );
   }
+
+  componentDidUpdate(prevProps, prevState) {
+    const pageChange = this.state.page !== prevState.page;
+    if (pageChange) this.fetchArticles();
+  }
+
   componentDidMount() {
     this.fetchArticles();
   }
 
+  changePage = direction => {
+    this.setState(({ page }) => {
+      return { page: page + direction };
+    });
+  };
+
   fetchArticles = sorted_by => {
     const { topic_slug } = this.props;
-    getArticles(topic_slug, sorted_by)
-      .then(articles => {
+    const { page } = this.state;
+    getArticles(topic_slug, sorted_by, page)
+      .then(({ articles, total_count }) => {
+        const maxPage = Math.ceil(total_count / 10);
         this.setState({
           articles,
           isLoading: false,
-          error: null
+          error: null,
+          maxPage
         });
       })
       .catch(error => {

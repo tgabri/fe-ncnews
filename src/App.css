@@ -224,7 +224,6 @@ header a {
 }
 .addArticleBtn p {
   padding: 5px;
-
   font-weight: bold;
   color: #0000ff;
   background-color: transparent;
@@ -376,6 +375,36 @@ header a {
 .postArticleContainer textarea {
   height: 360px;
   width: 80%;
+}
+
+/* PAGER */
+
+.pager {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 10px auto;
+  width: 120px;
+}
+.pager button {
+  margin-right: 5px;
+  padding: 5px;
+  font-weight: bold;
+  color: #0000ff;
+  background-color: transparent;
+  border: 1px #0000ff solid;
+  border-radius: 5px;
+}
+.pager button:hover {
+  color: #ff0000;
+}
+.pager button:active {
+  background-color: #0000ff;
+}
+.pager p {
+  font-weight: bold;
+  color: #0000ff;
+  margin-right: 5px;
 }
 
 /* ARTICLE */

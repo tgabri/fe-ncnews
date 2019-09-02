@@ -59,6 +59,7 @@ export default class ArticleCard extends Component {
                 </li>
                 <div className='commentContainer'>
                   <CommentsByID
+                    comment_count={item.comment_count}
                     article_id={`${item.article_id}`}
                     loggedInUser={this.props.loggedInUser}
                   />

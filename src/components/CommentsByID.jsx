@@ -5,15 +5,18 @@ import DeleteComment from './DeleteComment';
 import { insertComment } from '../utils';
 import { removeComment } from '../utils';
 import Voter from './reusable/Voter';
+import Pager from './reusable/Pager';
 
 export default class CommentsByID extends Component {
   state = {
     comments: null,
     isLoading: true,
-    error: null
+    error: null,
+    page: 1,
+    maxPage: null
   };
   render() {
-    const { isLoading, comments, error } = this.state;
+    const { isLoading, comments, error, page, maxPage } = this.state;
     if (isLoading) return <p>Loading...</p>;
     if (error) return <p>ERROR</p>;
     return (
@@ -27,6 +30,7 @@ export default class CommentsByID extends Component {
         <div className='comments'>
           <h2>Comments</h2>
         </div>
+        <Pager page={page} maxPage={maxPage} changePage={this.changePage} />
         {comments.map(comment => (
           <div key={comment.comment_id} className='commentsContainer'>
             <div className='topBar'>
@@ -53,14 +57,28 @@ export default class CommentsByID extends Component {
       </main>
     );
   }
+
+  componentDidUpdate(prevProps, prevState) {
+    const pageChange = this.state.page !== prevState.page;
+    if (pageChange) this.fetchComments();
+  }
+
   componentDidMount() {
     this.fetchComments();
   }
 
+  changePage = direction => {
+    this.setState(({ page }) => {
+      return { page: page + direction };
+    });
+  };
+
   fetchComments = () => {
-    const { article_id } = this.props;
-    getComments(article_id).then(comments => {
-      this.setState({ comments, isLoading: false });
+    const { article_id, comment_count } = this.props;
+    const { page } = this.state;
+    getComments(article_id, page).then(({ comments }) => {
+      const maxPage = Math.ceil(comment_count / 10);
+      this.setState({ comments, isLoading: false, maxPage });
     });
   };
 
