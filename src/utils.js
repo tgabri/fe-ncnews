@@ -62,3 +62,9 @@ export const removeArticle = article_id => {
 export const removeComment = comment_id => {
   return axios.delete(`${baseURL}/comments/${comment_id}`);
 };
+
+export const getUsers = () => {
+  return axios.get(`${baseURL}/users`).then(({ data }) => {
+    return data.users;
+  });
+};

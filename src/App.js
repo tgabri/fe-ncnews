@@ -22,7 +22,7 @@ class App extends React.Component {
           changeLoggedInUser={this.changeLoggedInUser}
         />
         <Router>
-          <HomePage path='/' />
+          <HomePage path='/' loggedInUser={loggedInUser} />
           <ArticlesList path='/articles' loggedInUser={loggedInUser} />
           <ArticlesList
             path='/topics/:topic_slug/articles'
@@ -42,7 +42,14 @@ class App extends React.Component {
       </div>
     );
   }
+  componentDidMount() {
+    const loggedInUser = localStorage.getItem('username');
+    this.setState({
+      loggedInUser
+    });
+  }
   changeLoggedInUser = username => {
+    localStorage.setItem('username', username);
     this.setState({
       loggedInUser: username
     });
